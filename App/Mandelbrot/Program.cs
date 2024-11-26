@@ -6,6 +6,8 @@ scherm.Text = "Mandelbrot";
 scherm.BackColor = Color.Beige;
 scherm.ClientSize = new Size(300, 400);
 
+//tekstkaders en knop maken
+
 Label tekst_midden_x = new Label();  
 Label tekst_midden_y = new Label();
 Label tekst_schaal = new Label();
@@ -37,7 +39,7 @@ invoer_midden_y.Size = new Size(80, 15);
 scherm.Controls.Add(tekst_schaal);
 tekst_schaal.Location = new Point(10, 65);
 tekst_schaal.Size = new Size(80, 15);
-tekst_schaal.Text = "schaal";
+tekst_schaal.Text = "schaal:";
 
 scherm.Controls.Add(invoer_schaal);
 invoer_schaal.Location = new Point(100, 65);
@@ -60,6 +62,8 @@ ga_knop.Text = "Ga!";
 
 
 Application.Run(scherm);
+
+
 
 
 

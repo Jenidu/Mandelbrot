@@ -59,6 +59,17 @@ ga_knop.Text = "Ga!";
 
 
 
+
+
+double[] functie_f(double x, double y, double a, double b){
+
+    double[] ret = {0, 0};
+    ret[0] = a * a - b * b + x;
+    ret[1] = 2 * a * b + y;
+    return ret;
+}
+
+
 Application.Run(scherm);
 
 

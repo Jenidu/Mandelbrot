@@ -72,3 +72,4 @@ double[] functie_f(double x, double y, double a, double b){
     return ret;
 }
 
+

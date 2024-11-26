@@ -18,14 +18,46 @@ Button ga_knop = new Button();
 
 scherm.Controls.Add(tekst_midden_x);
 tekst_midden_x.Location = new Point(10, 15);
-tekst_midden_x.Size = new Size(80, 20);
+tekst_midden_x.Size = new Size(80, 15);
 tekst_midden_x.Text = "midden x:";
 
+scherm.Controls.Add(invoer_midden_x);
+invoer_midden_x.Location = new Point(100, 15);
+invoer_midden_x.Size = new Size(80, 15);
 
 scherm.Controls.Add(tekst_midden_y);
-tekst_midden_y.Location = new Point(10, 30);
-tekst_midden_y.Size = new Size(80,20);
+tekst_midden_y.Location = new Point(10, 40);
+tekst_midden_y.Size = new Size(80,15);
 tekst_midden_y.Text = "midden y:";
+
+scherm.Controls.Add(invoer_midden_y);
+invoer_midden_y.Location = new Point(100, 40);
+invoer_midden_y.Size = new Size(80, 15);
+
+scherm.Controls.Add(tekst_schaal);
+tekst_schaal.Location = new Point(10, 65);
+tekst_schaal.Size = new Size(80, 15);
+tekst_schaal.Text = "schaal";
+
+scherm.Controls.Add(invoer_schaal);
+invoer_schaal.Location = new Point(100, 65);
+invoer_schaal.Size = new Size(80, 15);
+
+scherm.Controls.Add(tekst_max_aantal);
+tekst_max_aantal.Location = new Point(10, 90);
+tekst_max_aantal.Size = new Size(80, 25);
+tekst_max_aantal.Text = "max aantal:";
+
+scherm.Controls.Add(invoer_max_aantal);
+invoer_max_aantal.Location = new Point(100, 90);
+invoer_max_aantal.Size = new Size(80, 15);
+
+scherm.Controls.Add(ga_knop);
+ga_knop.Location = new Point(225, 90);
+ga_knop.Size = new Size(40, 25);
+ga_knop.Text = "Ga!";
+
+
 
 Application.Run(scherm);
 

@@ -8,24 +8,26 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\jenid\\.nuget\\packages\\": {}
+    "C:\\Users\\joly-\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jenid\\Documents\\Uni\\ModProg\\Git\\Mandelbrot\\App\\Mandelbrot\\Mandelbrot.csproj",
+      "projectUniqueName": "C:\\Github\\Mandelbrot\\App\\Mandelbrot\\Mandelbrot.csproj",
       "projectName": "Mandelbrot",
-      "projectPath": "C:\\Users\\jenid\\Documents\\Uni\\ModProg\\Git\\Mandelbrot\\App\\Mandelbrot\\Mandelbrot.csproj",
-      "packagesPath": "C:\\Users\\jenid\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jenid\\Documents\\Uni\\ModProg\\Git\\Mandelbrot\\App\\Mandelbrot\\obj\\",
+      "projectPath": "C:\\Github\\Mandelbrot\\App\\Mandelbrot\\Mandelbrot.csproj",
+      "packagesPath": "C:\\Users\\joly-\\.nuget\\packages\\",
+      "outputPath": "C:\\Github\\Mandelbrot\\App\\Mandelbrot\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\jenid\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\joly-\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -64,7 +66,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

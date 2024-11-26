@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{1975D5DA-C118-4895-9F29-A8548F856E54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mandelbrot", "App\Mandelbrot\Mandelbrot.csproj", "{715247D9-9C27-4D1A-8AD0-7D2495943081}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{715247D9-9C27-4D1A-8AD0-7D2495943081}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{715247D9-9C27-4D1A-8AD0-7D2495943081}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{715247D9-9C27-4D1A-8AD0-7D2495943081}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{715247D9-9C27-4D1A-8AD0-7D2495943081}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{715247D9-9C27-4D1A-8AD0-7D2495943081} = {1975D5DA-C118-4895-9F29-A8548F856E54}
+	EndGlobalSection
+EndGlobal

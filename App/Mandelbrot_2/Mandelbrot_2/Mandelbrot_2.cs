@@ -1,6 +1,11 @@
 using System.Drawing;
 using System.Windows.Forms;
 
+Form scherm = new Form();
+scherm.Text = "Mandelbrot";
+scherm.BackColor = Color.Beige;
+scherm.ClientSize = new Size(200, 100);
+
 internal class Mandelbrot_2 : Form
 {
     public Mandelbrot_2()

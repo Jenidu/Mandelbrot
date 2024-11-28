@@ -1,4 +1,5 @@
 *.vsidx
+.vs/
 .vscode/
 App/Mandelbrot/bin/
 App/Mandelbrot/obj/

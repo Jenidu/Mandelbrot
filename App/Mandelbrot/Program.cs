@@ -7,7 +7,6 @@ scherm.Text = "Mandelbrot";
 scherm.BackColor = Color.Beige;
 scherm.ClientSize = new Size(300, 400);
 
-//tekstkaders en knop maken
 
 Label tekst_midden_x = new Label();  
 Label tekst_midden_y = new Label();
@@ -108,14 +107,23 @@ bool mandelgetal(double x, double y)
 
 void Teken_figuur ()
 {
-    // for (int x = 0; x < plaatje.Width ; x++) {
-    //   for (int y = 0; y < plaatje.Height; y++)
-    // {
-    //   plaatje.SetPixel(x,y, Color.White);
-    //}
-    //}
+    for (int x = 0; x < plaatje.Width; x++)
+    {
+        for (int y = 0; y < plaatje.Height; y++)
+        {
+            if (mandelgetal(x, y))
+            {
+                gr_plaatje.FillRectangle(Brushes.Black, x, y, 1, 1);
+            }
+            else
+            {
+                gr_plaatje.FillRectangle(Brushes.White, x, y, 1, 1);
+            }
 
-    gr_plaatje.FillEllipse(Brushes.AliceBlue, 100, 100, 100, 100);
-   
-    
+
+
+
+
+        }
+    }
 }

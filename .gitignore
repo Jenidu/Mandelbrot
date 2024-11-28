@@ -3,3 +3,4 @@
 .vscode/
 App/Mandelbrot/bin/
 App/Mandelbrot/obj/
+App/Mandelbrot/Mandelbrot.csproj.user

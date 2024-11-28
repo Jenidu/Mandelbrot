@@ -94,7 +94,7 @@ bool mandelgetal(double x, double y)
     double afstand = 0;
     int n;
 
-    for (n = 0; afstand < 2; n++)
+    for (n = 0; afstand < 2 && n < 100; n++)
     { 
         nieuwe_a_b = functie_f(x, y, nieuwe_a_b[0], nieuwe_a_b[1]);
         afstand = Math.Sqrt(Math.Pow(nieuwe_a_b[0], 2) + Math.Pow(nieuwe_a_b[1], 2));

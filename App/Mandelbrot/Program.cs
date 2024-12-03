@@ -42,7 +42,7 @@ Graphics gr_plaatje = Graphics.FromImage(plaatje);
 opstartVenster();
 
 tekenFiguur();
-
+Console.WriteLine("Hello");
 Application.Run(scherm);
 
 void opstartVenster(){
@@ -100,16 +100,18 @@ double[] functieF(double x, double y, double a, double b){
     return ret;  /* Geef nieuwe a,b terug */
 }
 
-int mandelGetal(double a, double b){
+int mandelGetal(double x, double y){
 
-    double[] a_b = [a, b];
-    double afstand = 10;
+    double[] a_b = [0, 0];
+    double afstand = 0;
     int n;
 
-    for (n = 0; afstand >= 2 && n < MaxMandelIteraties; n++)
+    for (n = 0; afstand < 2 && n < MaxMandelIteraties; n++)
     { 
-        a_b = functieF(0, 0, a_b[0], a_b[1]);  /* Nieuwe a,b */
+        a_b = functieF(x, y, a_b[0], a_b[1]);  /* Nieuwe a,b */
+
         afstand = Math.Sqrt(Math.Pow(a_b[0], 2) + Math.Pow(a_b[1], 2));  /* afstand = sqrt(a^2 + b^2) */
+        Console.WriteLine(afstand);
     }
 
     return n;

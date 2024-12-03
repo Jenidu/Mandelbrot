@@ -2,9 +2,9 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-int[] Venster_Grootte = {300, 400};
+int[] Venster_Grootte = {600, 800};
 int[] StartBM = {15, 130};  /* Start positie van bitmap, relatief tot de venster */
-int[] BM_Grootte = {270, 260};  /* Bitmap grootte */
+int[] BM_Grootte = {400, 400};  /* Bitmap grootte */
 
 /* Tekst boxen */
 int[] StartVensterTekst = {10, 15};
@@ -42,7 +42,6 @@ Graphics gr_plaatje = Graphics.FromImage(plaatje);
 opstartVenster();
 
 tekenFiguur();
-Console.WriteLine("Hello");
 Application.Run(scherm);
 
 void opstartVenster(){
@@ -111,10 +110,24 @@ int mandelGetal(double x, double y){
         a_b = functieF(x, y, a_b[0], a_b[1]);  /* Nieuwe a,b */
 
         afstand = Math.Sqrt(Math.Pow(a_b[0], 2) + Math.Pow(a_b[1], 2));  /* afstand = sqrt(a^2 + b^2) */
-        Console.WriteLine(afstand);
+        
     }
 
     return n;
+}
+
+double functie_x(int x){
+    double x_new = (double)x / 100;
+    x_new = x_new - 2;
+    return x_new;
+}
+
+double functie_y(int y)
+{
+    double y_new = (double)y / 100;
+    y_new = y_new - 2;
+    y_new = y_new * -1;
+    return y_new;
 }
 
 void tekenFiguur(){
@@ -123,14 +136,20 @@ void tekenFiguur(){
     {
         for (int y = 0; y < plaatje.Height; y++)
         {
-            if ((mandelGetal(x, y) % 2) == 0)  /* Mandelgetal is even */
+
+            double x_coordinaat = functie_x(x);
+            double y_coordinaat = functie_y(y);
+            
+
+            if (mandelGetal(x_coordinaat, y_coordinaat) % 2 == 0)
             {
-                gr_plaatje.FillRectangle(Brushes.Black, x, y, 1, 1);  /* Maak pixel x,y zwart */
+                plaatje.SetPixel(x, y, Color.Black);
             }
-            else  /* Mandelgetal is oneven */
+            else
             {
-                gr_plaatje.FillRectangle(Brushes.White, x, y, 1, 1);  /* Maak pixel x,y wit */
+                plaatje.SetPixel(x,y, Color.White);
             }
+            
         }
     }
 }

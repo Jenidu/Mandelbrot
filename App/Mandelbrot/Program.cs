@@ -326,7 +326,7 @@ void muisKlik(object o, MouseEventArgs ea)/*Event handler voor in- en uitzoomen 
 
     double info_midden_x = Math.Round(x_midden, 2);
     double info_midden_y = Math.Round(y_midden, 2);
-    double info_schaal = Math.Round(schaalfactor, 2);
+    double info_schaal = Math.Round(schaalfactor, 6);
     string tekst_midden = ($"het midden is nu ({info_midden_x},{info_midden_y})!");
     string tekst_schaal = ($"De schaal is nu {info_schaal}!");
     scherm.Controls.Add(tekst_nieuwe_midden);
@@ -433,6 +433,7 @@ void teken_3(object o, EventArgs e)/*Het tekenen van voorbeeld 3*/
     invoer_max_aantal.Text = "1000";
     tekst_nieuwe_midden.Text = "";
     tekst_nieuwe_schaal.Text = "";
+    schuif.Value = 130;
 
     tekenfiguur_kleur();
 }

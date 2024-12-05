@@ -1,5 +1,6 @@
 ﻿/*library import*/
 using System;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -332,7 +333,7 @@ void tekenen(object o, EventArgs e)
 {
     tekst_nieuwe_midden.Text = "";
     tekst_nieuwe_schaal.Text = "";
-    tekenFiguur();
+    tekenfiguur_kleur();
     label_plaatje.Invalidate(); //object dat onder handen genomen wordt, wordt opnieuw getekend. 
 
 }
@@ -344,7 +345,7 @@ void muisKlik(object o, MouseEventArgs ea)
     if (ea.Button == MouseButtons.Left)
     {
 
-        schaalfactor = schaalfactor - 0.1;
+        schaalfactor = schaalfactor - 0.2;
         muis_x = functie_x(ea.X);
         x_midden = x_midden + muis_x;
         muis_y = functie_y(ea.Y);
@@ -354,7 +355,7 @@ void muisKlik(object o, MouseEventArgs ea)
     }
     if (ea.Button == MouseButtons.Right)
     {
-        schaalfactor = schaalfactor + 0.05;
+        schaalfactor = schaalfactor + 0.2;
         muis_x = functie_x(ea.X);
         x_midden = x_midden + muis_x;
         muis_y = functie_y(ea.Y);
@@ -388,16 +389,18 @@ void muisKlik(object o, MouseEventArgs ea)
 
 void VeranderSchuif(object o, EventArgs ea)
 {
+    tekenfiguur_kleur();
     label_plaatje.Invalidate();
 
 }
 
 void tekenfiguur_kleur()
 {
-    int blauw = schuif.Value;
+    int blauw = 0;
     int rood = 0;
     int groen = 0;
     Color kleur = Color.FromArgb(rood, groen, blauw);
+    int mandel_chunks = Maxmandeliteraties / 3;
 
 
     for (int x = 0; x < plaatje.Width; x++)
@@ -408,18 +411,27 @@ void tekenfiguur_kleur()
             double x_coordinaat = functie_x(x) + x_midden;
             double y_coordinaat = functie_y(y) + y_midden;
 
+            int mandel = mandelGetal(x_coordinaat, y_coordinaat);
 
+            if (mandel < mandel_chunks)
+            {
+                rood = Convert.ToInt32((255.0 / Maxmandeliteraties) * mandel * (schuif.Value + 1));
+                rood %= 256;
+            }
+            if (mandel < mandel_chunks * 2)
+            {
+                blauw = Convert.ToInt32((255.0 / (Maxmandeliteraties - mandel_chunks)) * mandel * (schuif.Value + 1));
+                blauw %= 256;
+            }
+            if (mandel < mandel_chunks *3)
+            {
+                groen = Convert.ToInt32((255.0 / (Maxmandeliteraties - 2*mandel_chunks)) * mandel * (schuif.Value + 1));
+                groen %= 256;
+            }
 
-            if (mandelGetal(x_coordinaat, y_coordinaat) % 2 == 0 || mandelGetal(x_coordinaat, y_coordinaat) == oneindig)
-            {
-                rood = rood + 50;
-                plaatje.SetPixel(x, y, kleur);
-            }
-            else
-            {
-                groen = groen + 1;
-                plaatje.SetPixel(x, y, kleur);
-            }
+            
+            kleur = Color.FromArgb(rood, groen, blauw);
+            plaatje.SetPixel(x, y, kleur);                
 
         }
     }

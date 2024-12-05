@@ -2,9 +2,9 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-int[] Venster_Grootte = {300, 400};
+int[] Venster_Grootte = {500, 600};
 int[] StartBM = {15, 130};  /* Start positie van bitmap, relatief tot de venster */
-int[] BM_Grootte = {270, 260};  /* Bitmap grootte */
+int[] BM_Grootte = {400, 400};  /* Bitmap grootte */
 
 /* Tekst boxen */
 int[] StartVensterTekst = {10, 15};
@@ -38,10 +38,15 @@ label_plaatje.BackColor = Color.White;
 label_plaatje.Image = plaatje;
 Graphics gr_plaatje = Graphics.FromImage(plaatje);
 
-
 opstartVenster();
 
-tekenFiguur();
+double midden_x = Convert.ToDouble(invoer_midden_x.Text);
+double midden_y = Convert.ToDouble(invoer_midden_y.Text);
+double schaal = Convert.ToDouble(invoer_schaal.Text);
+int max_aantal_herhalingen = Convert.ToInt32(invoer_max_aantal.Text);
+
+ga_knop.Click += tekenFiguur;
+
 Console.WriteLine("Hello");
 Application.Run(scherm);
 
@@ -72,18 +77,22 @@ void opstartVenster(){
     scherm.Controls.Add(invoer_midden_x);
     invoer_midden_x.Location = new Point(StartTekstBox[0], StartTekstBox[1]);
     invoer_midden_x.Size = new Size(TekstBox_Grootte[0], TekstBox_Grootte[1]);
+    invoer_midden_x.Text = "0";
 
     scherm.Controls.Add(invoer_midden_y);
     invoer_midden_y.Location = new Point(StartTekstBox[0], StartTekstBox[1] + TekstBox_PosVerschil[1]);
     invoer_midden_y.Size = new Size(TekstBox_Grootte[0], TekstBox_Grootte[1]);
+    invoer_midden_y.Text = "0";
 
     scherm.Controls.Add(invoer_schaal);
     invoer_schaal.Location = new Point(StartTekstBox[0], StartTekstBox[1] + TekstBox_PosVerschil[1] * 2);
     invoer_schaal.Size = new Size(TekstBox_Grootte[0], TekstBox_Grootte[1]);
+    invoer_schaal.Text = "1";
 
     scherm.Controls.Add(invoer_max_aantal);
     invoer_max_aantal.Location = new Point(StartTekstBox[0], StartTekstBox[1] + TekstBox_PosVerschil[1] * 3);
     invoer_max_aantal.Size = new Size(TekstBox_Grootte[0], TekstBox_Grootte[1]);
+    invoer_max_aantal.Text = "1";
 
     /* Knop aanmaken */
     scherm.Controls.Add(ga_knop);
@@ -111,19 +120,26 @@ int mandelGetal(double x, double y){
         a_b = functieF(x, y, a_b[0], a_b[1]);  /* Nieuwe a,b */
 
         afstand = Math.Sqrt(Math.Pow(a_b[0], 2) + Math.Pow(a_b[1], 2));  /* afstand = sqrt(a^2 + b^2) */
-        Console.WriteLine(afstand);
-    }
+    }//Console.WriteLine($"{afstand} {n}");
 
     return n;
 }
 
-void tekenFiguur(){
+void tekenFiguur(object o, EventArgs e){
 
-    for (int x = 0; x < plaatje.Width; x++)
+    double x_i, y_i;  /* Mandelbrot coordinaten */
+    int x, y;  /* Bitmap coordinaten */
+Console.WriteLine("figuur");
+    double omgezette_schaal = schaal / 4;
+
+    double x_mandel_schaal = omgezette_schaal / plaatje.Width;
+    double y_mandel_schaal = omgezette_schaal / plaatje.Height;  //Console.WriteLine(x_mandel_schaal); Console.WriteLine(y_mandel_schaal);
+
+    for (x = 0, x_i = -2; x < plaatje.Width; x++, x_i += x_mandel_schaal)
     {
-        for (int y = 0; y < plaatje.Height; y++)
+        for (y = plaatje.Height-1, y_i = 2; y >= 0; y--, y_i -= y_mandel_schaal)
         {
-            if ((mandelGetal(x, y) % 2) == 0)  /* Mandelgetal is even */
+            if ((mandelGetal(x_i, y_i) % 2) == 0)  /* Mandelgetal is even */
             {
                 gr_plaatje.FillRectangle(Brushes.Black, x, y, 1, 1);  /* Maak pixel x,y zwart */
             }

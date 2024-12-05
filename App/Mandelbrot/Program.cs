@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-int[] Venster_Grootte = {600, 800};
+int[] Venster_Grootte = {430, 545}; /*venster grootte*/
 int[] StartBM = {15, 130};  /* Start positie van bitmap, relatief tot de venster */
 int[] BM_Grootte = {400, 400};  /* Bitmap grootte */
 
@@ -14,23 +14,30 @@ int[] TekstBox_PosVerschil = {0, 25};
 
 const int MaxMandelIteraties = 10000;  /* Maximale keren dat een de mandelbrot itereert */
 
-
+/*scherm venster*/
 Form scherm = new Form();
 scherm.Text = "Mandelbrot";
 scherm.BackColor = Color.Beige;
 scherm.ClientSize = new Size(Venster_Grootte[0], Venster_Grootte[1]);
 
+/*labels*/
 Label tekst_midden_x = new Label();  
 Label tekst_midden_y = new Label();
 Label tekst_schaal = new Label();
 Label tekst_max_aantal = new Label();
+
+/*textboxen*/ 
 TextBox invoer_midden_x = new TextBox();
 TextBox invoer_midden_y = new TextBox();
 TextBox invoer_schaal = new TextBox();
 TextBox invoer_max_aantal = new TextBox();
+
 Button ga_knop = new Button();
+
 Bitmap plaatje = new Bitmap(BM_Grootte[0], BM_Grootte[1]);
+
 Label label_plaatje = new Label();
+
 scherm.Controls.Add(label_plaatje);
 label_plaatje.Location = new Point(StartBM[0], StartBM[1]);
 label_plaatje.Size = new Size(BM_Grootte[0], BM_Grootte[1]);
@@ -38,10 +45,42 @@ label_plaatje.BackColor = Color.White;
 label_plaatje.Image = plaatje;
 Graphics gr_plaatje = Graphics.FromImage(plaatje);
 
+//globale toestand variabelen
+
+double x_midden = 0, y_midden = 0; 
+
 
 opstartVenster();
 
-tekenFiguur();
+invoer_midden_x.TextChanged += boxVeranderd;
+invoer_midden_y.TextChanged += boxVeranderd;
+
+
+
+//double x_midden = double.Parse(invoer_midden_x.Text);
+//double y_midden = Convert.ToDouble(invoer_midden_y.Text);
+//double schaalfactor = Convert.ToDouble(invoer_schaal.Text);
+//int herhalingen = Convert.ToInt32(invoer_schaal.Text);
+
+void boxVeranderd(object sender, EventArgs ea)
+{
+    try
+    {
+        x_midden = double.Parse(invoer_midden_x.Text);
+        y_midden = double.Parse(invoer_midden_y.Text);
+        scherm.Invalidate();
+    }
+    catch(Exception exc)
+    {
+        ((TextBox)sender).BackColor = Color.Tomato;
+
+    }
+}
+
+
+ga_knop.Click += UI;
+
+
 Application.Run(scherm);
 
 void opstartVenster(){
@@ -89,6 +128,11 @@ void opstartVenster(){
     ga_knop.Location = new Point(225, 90);
     ga_knop.Size = new Size(40, 25);
     ga_knop.Text = "Ga!";
+
+    invoer_midden_x.Text = "0";
+    invoer_midden_y.Text = "0";
+    invoer_max_aantal.Text = "100";
+    invoer_schaal.Text = "0.01";
 }
 
 double[] functieF(double x, double y, double a, double b){
@@ -127,6 +171,7 @@ double functie_y(int y)
     double y_new = (double)y / 100;
     y_new = y_new - 2;
     y_new = y_new * -1;
+    y_new = y_new;
     return y_new;
 }
 
@@ -137,8 +182,8 @@ void tekenFiguur(){
         for (int y = 0; y < plaatje.Height; y++)
         {
 
-            double x_coordinaat = functie_x(x);
-            double y_coordinaat = functie_y(y);
+            double x_coordinaat = functie_x(x)+x_midden;
+            double y_coordinaat = functie_y(y) + y_midden;
             
 
             if (mandelGetal(x_coordinaat, y_coordinaat) % 2 == 0)
@@ -152,4 +197,10 @@ void tekenFiguur(){
             
         }
     }
+}
+
+void UI(object o, EventArgs e)
+{
+    tekenFiguur();
+
 }

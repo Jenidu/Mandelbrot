@@ -1,10 +1,11 @@
 ﻿/*library import*/
 using System;
 using System.Drawing;
+using System.Reflection.Metadata;
 using System.Windows.Forms;
 
 /* Grootte en startposities*/
-int[] Venster_Grootte = {760, 545}; /* Venster grootte */
+int[] Venster_Grootte = { 760, 545 }; /* Venster grootte */
 int[] StartBM = { 15, 130 };  /* Start positie van bitmap, relatief tot de venster */
 int[] BM_Grootte = { 400, 400 };  /* Bitmap grootte */
 
@@ -57,10 +58,10 @@ TrackBar schuif = new TrackBar();
 
 /* Bitmaps */
 Bitmap plaatje = new Bitmap(BM_Grootte[0], BM_Grootte[1]);
-Bitmap voorbeeld_1 = new Bitmap(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
-Bitmap voorbeeld_2 = new Bitmap(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
-Bitmap voorbeeld_3 = new Bitmap(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
-Bitmap voorbeeld_4 = new Bitmap(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
+Bitmap voorbeeld_1_bm = new Bitmap(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
+Bitmap voorbeeld_2_bm = new Bitmap(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
+Bitmap voorbeeld_3_bm = new Bitmap(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
+Bitmap voorbeeld_4_bm = new Bitmap(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
 
 
 /* Labels */
@@ -70,11 +71,14 @@ Label label_voorbeeld_2 = new Label();
 Label label_voorbeeld_3 = new Label();
 Label label_voorbeeld_4 = new Label();
 
+/* Voorbeeld waardes */
+Voorbeeld_waardes voorbeeld1, voorbeeld2, voorbeeld3, voorbeeld4;
 
 /* Globale toestand variabelen */
 double x_midden = 0, y_midden = 0, schaalfactor = 1, muis_x = 0, muis_y = 0;
 int Maxmandeliteraties = 100;  /* Maximale keren dat een de mandelbrot itereert */
 
+initVoorbeelden();
 opstartVenster();
 
 /* Event handlers voor als de text veranderd in boxen */
@@ -98,20 +102,31 @@ schuif.Scroll += VeranderSchuif;  /* Event handler voor het gebruik van de track
 
 Application.Run(scherm);
 
+void initVoorbeelden(){
 
-void boxVeranderd(object sender, EventArgs ea)
-{
-    try
-    {
-        x_midden = double.Parse(invoer_midden_x.Text);
-        y_midden = double.Parse(invoer_midden_y.Text);
-        schaalfactor = double.Parse(invoer_schaal.Text);
-        Maxmandeliteraties = int.Parse(invoer_max_aantal.Text);
-    }
-    catch
-    {
-        
-    }
+    voorbeeld1.x_midden = 0.0;
+    voorbeeld1.y_midden = 0.0;
+    voorbeeld1.schaal = 1.0;
+    voorbeeld1.maxmandeliteraties = 100;
+    voorbeeld1.schuif = 110;
+    
+    voorbeeld2.x_midden = -0.108625;
+    voorbeeld2.y_midden = 0.9014428;
+    voorbeeld2.schaal = 3.8147E-6;
+    voorbeeld2.maxmandeliteraties = 400;
+    voorbeeld2.schuif = 255;
+
+    voorbeeld3.x_midden = 0.006875;
+    voorbeeld3.y_midden = 0.80638671875;
+    voorbeeld3.schaal = 9.765625E-03;
+    voorbeeld3.maxmandeliteraties = 1000;
+    voorbeeld3.schuif = 130;
+
+    voorbeeld4.x_midden = -0.16745422105204897;
+    voorbeeld4.y_midden = 1.041226005880121;
+    voorbeeld4.schaal = 5.82076609134674E-6;
+    voorbeeld4.maxmandeliteraties = 2000;
+    voorbeeld4.schuif = 50;
 }
 
 void opstartVenster()
@@ -182,28 +197,28 @@ void opstartVenster()
     label_voorbeeld_1.Location = new Point(start_voorbeeld[0], start_voorbeeld[1]);
     label_voorbeeld_1.Size = new Size(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
     label_voorbeeld_1.BackColor = Color.White;
-    label_voorbeeld_1.Image = voorbeeld_1;
+    label_voorbeeld_1.Image = voorbeeld_1_bm;
 
     /* Voorbeeldbitmap 2 */
     scherm.Controls.Add(label_voorbeeld_2);
     label_voorbeeld_2.Location = new Point(start_voorbeeld[0], start_voorbeeld[1] + BM_verschil[1]);
     label_voorbeeld_2.Size = new Size(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
     label_voorbeeld_2.BackColor = Color.White;
-    label_voorbeeld_2.Image = voorbeeld_2;
+    label_voorbeeld_2.Image = voorbeeld_2_bm;
 
     /* Voorbeeldbitmap 3 */
     scherm.Controls.Add(label_voorbeeld_3);
     label_voorbeeld_3.Location = new Point(start_voorbeeld[0] + BM_verschil[0], start_voorbeeld[1]);
     label_voorbeeld_3.Size = new Size(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
     label_voorbeeld_3.BackColor = Color.White;
-    label_voorbeeld_3.Image = voorbeeld_3;
+    label_voorbeeld_3.Image = voorbeeld_3_bm;
 
     /* Voorbeeldbitmap 4 */
     scherm.Controls.Add(label_voorbeeld_4);
     label_voorbeeld_4.Location = new Point(start_voorbeeld[0] + BM_verschil[0], start_voorbeeld[1] + BM_verschil[1]);
     label_voorbeeld_4.Size = new Size(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
     label_voorbeeld_4.BackColor = Color.White;
-    label_voorbeeld_4.Image = voorbeeld_4;
+    label_voorbeeld_4.Image = voorbeeld_4_bm;
 
     /* Knop voorbeeld 1 */
     scherm.Controls.Add(kies_1);
@@ -250,6 +265,21 @@ void opstartVenster()
     tekenfiguur_kleur();
 }
 
+void boxVeranderd(object sender, EventArgs ea)
+{
+    try
+    {
+        x_midden = double.Parse(invoer_midden_x.Text);
+        y_midden = double.Parse(invoer_midden_y.Text);
+        schaalfactor = double.Parse(invoer_schaal.Text);
+        Maxmandeliteraties = int.Parse(invoer_max_aantal.Text);
+    }
+    catch
+    {
+        
+    }
+}
+
 double[] functieF(double x, double y, double a, double b)  /* Berekent (a,b) door middel van f */
 {
     double[] ret = { 0, 0 };
@@ -272,23 +302,6 @@ int mandelGetal(double x, double y, int iteraties)  /* Berekent het mandelgetal 
     return n;
 }
 
-double functie_x(int x) /* Berekent de nieuwe x_coördinaat */
-{
-    double x_new = (double)x / 100;
-    x_new = (x_new - 2) * schaalfactor;
-    return x_new;
-}
-
-double functie_y(int y)  /* Berekent de nieuwe y coördinaat */
-{
-    double y_new = (double)y / 100;
-
-    y_new = y_new - 2;
-    y_new = (y_new * -1) * schaalfactor;
-
-    return y_new;
-}
-
 void tekenen(object o, EventArgs e)  /* Event handler voor het tekenen van de figuur bij drukken op de knop */
 {
     x_midden = double.Parse(invoer_midden_x.Text);
@@ -306,18 +319,18 @@ void muisKlik(object o, MouseEventArgs ea)  /* Event handler voor in- en uitzoom
     if (ea.Button == MouseButtons.Left)
     {
         schaalfactor = Math.Abs(schaalfactor) - 0.2 * Math.Abs(schaalfactor); 
-        muis_x = functie_x(ea.X);
+        muis_x = mandelX(ea.X, schaalfactor);
         x_midden = x_midden + muis_x;
-        muis_y = functie_y(ea.Y);
+        muis_y = mandelY(ea.Y, schaalfactor);
         y_midden = y_midden + muis_y;
         tekenfiguur_kleur();
     }
     if (ea.Button == MouseButtons.Right)
     {
         schaalfactor = Math.Abs(schaalfactor) + 0.2 * Math.Abs(schaalfactor);
-        muis_x = functie_x(ea.X);
+        muis_x = mandelX(ea.X, schaalfactor);
         x_midden = x_midden + muis_x;
-        muis_y = functie_y(ea.Y);
+        muis_y = mandelY(ea.Y, schaalfactor);
         y_midden = y_midden + muis_y;
         tekenfiguur_kleur();
     }
@@ -325,7 +338,7 @@ void muisKlik(object o, MouseEventArgs ea)  /* Event handler voor in- en uitzoom
     double info_midden_x = Math.Round(x_midden, 2);
     double info_midden_y = Math.Round(y_midden, 2);
     double info_schaal = Math.Round(schaalfactor, 6);
-    string tekst_midden = $"het midden is nu ({info_midden_x}, {info_midden_y})";
+    string tekst_midden = $"Het midden is nu ({info_midden_x}, {info_midden_y})";
     string tekst_schaal = $"De schaal is nu {info_schaal}";
     scherm.Controls.Add(tekst_nieuwe_midden);
     tekst_nieuwe_midden.Location = new Point(StartVensterTekst_Muisklik[0], StartVensterTekst_Muisklik[1]);
@@ -342,6 +355,26 @@ void VeranderSchuif(object o, EventArgs ea)  /* Bij het veranderen van de schuif
     tekenfiguur_kleur();
 }
 
+double mandelX(int x, double schaal_x, int start_transformatie=-2, double start_factor = 1.0/100)  /* Berekent de nieuwe x coördinaat */
+{
+    double x_new = x * start_factor;
+
+    x_new += start_transformatie;  /* Begin positie x */
+    x_new *= schaal_x;
+
+    return x_new;
+}
+
+double mandelY(int y, double schaal_y, int start_transformatie=-2, double start_factor = 1.0/100)  /*Berekent de nieuwe y coördinaat */
+{
+    double y_new = y * start_factor;
+
+    y_new += start_transformatie;  /* Begin positie y */
+    y_new = y_new * -1 * schaal_y;
+
+    return y_new;
+}
+
 void tekenfiguur_kleur()
 {
     int mandel_chunks = Maxmandeliteraties / 3;
@@ -352,8 +385,8 @@ void tekenfiguur_kleur()
         for (int y = 0; y < plaatje.Height; y++)
         {
             /* Bereken coordinaten in de mandelbrot {-2 <-> 2} */
-            double x_mandel = functie_x(x) + x_midden;
-            double y_mandel = functie_y(y) + y_midden;
+            double x_mandel = mandelX(x, schaalfactor) + x_midden;
+            double y_mandel = mandelY(y, schaalfactor) + y_midden;
 
             int mandel_n = mandelGetal(x_mandel, y_mandel, Maxmandeliteraties);
                                   
@@ -373,130 +406,87 @@ void tekenfiguur_kleur()
     label_plaatje.Invalidate();
 }
 
-void voorbeeldenOpstarten()/*De voorbeelden met vooraf ingestelden waarden worden opgestart*/
+void voorbeeldenOpstarten()  /* De voorbeelden met vooraf ingestelden waarden worden opgestart */
 {
-    tekenVoorbeelden(voorbeeld_1, label_voorbeeld_1, 0, 0, 1, 100, 110);
-    tekenVoorbeelden(voorbeeld_2, label_voorbeeld_2, -0.108625, 0.9014428, 3.8147E-6, 400, 255);
-    tekenVoorbeelden(voorbeeld_3, label_voorbeeld_3, 0.006875, 0.80638671875, 9.765625E-03, 1000, 130);
-    tekenVoorbeelden(voorbeeld_4, label_voorbeeld_4, -0.16745422105204897, 1.041226005880121, 5.82076609134674E-6, 2000, 50);
+    tekenVoorbeelden(voorbeeld_1_bm, label_voorbeeld_1, voorbeeld1.x_midden, voorbeeld1.y_midden, voorbeeld1.schaal, voorbeeld1.maxmandeliteraties, voorbeeld1.schuif);
+    tekenVoorbeelden(voorbeeld_2_bm, label_voorbeeld_2, voorbeeld2.x_midden, voorbeeld2.y_midden, voorbeeld2.schaal, voorbeeld2.maxmandeliteraties, voorbeeld2.schuif);
+    tekenVoorbeelden(voorbeeld_3_bm, label_voorbeeld_3, voorbeeld3.x_midden, voorbeeld3.y_midden, voorbeeld3.schaal, voorbeeld3.maxmandeliteraties, voorbeeld3.schuif);
+    tekenVoorbeelden(voorbeeld_4_bm, label_voorbeeld_4, voorbeeld4.x_midden, voorbeeld4.y_midden, voorbeeld4.schaal, voorbeeld4.maxmandeliteraties, voorbeeld4.schuif);
 }
 
-void teken_1(object o, EventArgs e)/*Event handler voor het tekenen van voorbeeld 1 wanneer op de klop wordt gedrukt*/
+void teken_1(object o, EventArgs e)  /* Event handler voor het tekenen van voorbeeld 1 wanneer op de klop wordt gedrukt */
 {
-    x_midden = 0;
-    invoer_midden_x.Text = "0";
-    y_midden = 0;
-    invoer_midden_y.Text = "0";
-    schaalfactor = 1;
-    invoer_schaal.Text = "1";
-    Maxmandeliteraties = 100;
-    invoer_max_aantal.Text = "100";
-    schuif.Value = 110;
+    zetVoorbeeld(voorbeeld1);
+}
+
+void teken_2(object o, EventArgs e)  /* Event handler voor het tekenen van voorbeeld 2 wanneer op de klop wordt gedrukt */
+{
+    zetVoorbeeld(voorbeeld2);
+}
+
+void teken_3(object o, EventArgs e)  /* Event handler voor het tekenen van voorbeeld 3 wanneer op de klop wordt gedrukt */
+{
+    zetVoorbeeld(voorbeeld3);
+}
+
+void teken_4(object o, EventArgs e)  /* Event handler voor het tekenen van voorbeeld 4 wanneer op de klop wordt gedrukt */
+{
+    zetVoorbeeld(voorbeeld4);
+}
+
+void zetVoorbeeld(Voorbeeld_waardes voorbeeld){
+
+    x_midden = voorbeeld.x_midden;
+    invoer_midden_x.Text =  voorbeeld.x_midden.ToString();
+    y_midden = voorbeeld.y_midden;
+    invoer_midden_y.Text =  voorbeeld.y_midden.ToString();
+    schaalfactor = voorbeeld.schaal;
+    invoer_schaal.Text = voorbeeld.schaal.ToString();
+    Maxmandeliteraties = voorbeeld.maxmandeliteraties;
+    invoer_max_aantal.Text = voorbeeld.maxmandeliteraties.ToString();
+    schuif.Value = voorbeeld.schuif;
     tekst_nieuwe_midden.Text = "";
     tekst_nieuwe_schaal.Text = "";
 
     tekenfiguur_kleur();
 }
 
-void teken_2(object o, EventArgs e)/*Event handler voor het tekenen van voorbeeld 2*/
+void tekenVoorbeelden(Bitmap plaatje, Label label, double x_voorbeeld, double y_voorbeeld, double schaal_voorbeeld, int iteraties_voorbeeld, double kleur_voorbeeld)  /* Tekent de voorbeeldplaatjes */
 {
-    x_midden = -0.108625;
-    invoer_midden_x.Text = "-0.108625";
-    y_midden = 0.9014428;
-    invoer_midden_y.Text = "0.9014428";
-    schaalfactor = 3.8147E-6;
-    invoer_schaal.Text = "3.8147E-6";
-    Maxmandeliteraties = 400;
-    invoer_max_aantal.Text = "400";
-    schuif.Value = 255;
-    tekst_nieuwe_midden.Text = "";
-    tekst_nieuwe_schaal.Text = "";
-
-    tekenfiguur_kleur();
-}
-
-void teken_3(object o, EventArgs e)/*Het tekenen van voorbeeld 3*/
-{
-    x_midden = 0.006875;
-    invoer_midden_x.Text = "0.006875";
-    y_midden = 0.80638671875;
-    invoer_midden_y.Text = "0.80638671875";
-    schaalfactor = 9.765625E-03;
-    invoer_schaal.Text = "9.765625E-03";
-    Maxmandeliteraties = 1000;
-    invoer_max_aantal.Text = "1000";
-    tekst_nieuwe_midden.Text = "";
-    tekst_nieuwe_schaal.Text = "";
-    schuif.Value = 130;
-
-    tekenfiguur_kleur();
-}
-
-void teken_4(object o, EventArgs e)/*Het tekenen van voorbeeld 4*/
-{
-    x_midden = -0.16745422105204897;
-    invoer_midden_x.Text = "-0.16745422105204897";
-    y_midden = 1.041226005880121;
-    invoer_midden_y.Text = "1.041226005880121";
-    schaalfactor = 5.82076609134674E-6;
-    invoer_schaal.Text = "5.82076609134674E-11";
-    Maxmandeliteraties = 2000;
-    invoer_max_aantal.Text = "2000";
-    schuif.Value = 50;
-    tekst_nieuwe_midden.Text = "";
-    tekst_nieuwe_schaal.Text = "";
-
-    tekenfiguur_kleur();
-}
-
-double functie_x_test(int x, double c)/*Berekent de nieuwe x coördinaat in de voorbeelden*/
-{
-    double x_new_t = (double)x / 75;
-    x_new_t = x_new_t -1;
-    x_new_t = x_new_t * c;
-    return x_new_t;
-}
-
-double functie_y_test(int y, double c)/*Berekent de nieuwe y coördinaat in de voorbeelden*/
-{
-    double y_new_t = (double)y / 75;
-    y_new_t = y_new_t -1;
-    y_new_t = y_new_t * -1;
-    y_new_t = y_new_t * c;
-    return y_new_t;
-}
-
-void tekenVoorbeelden(Bitmap kies_bitmap, Label kies_label, double x_voorbeeld, double y_voorbeeld, double schaal_voorbeeld, int iteraties_voorbeeld, double kleur_voorbeeld)  /* Tekent de voorbeeldplaatjes */
-{
-    schaal_voorbeeld = schaal_voorbeeld * (400 / 150);
-    int blauw = 0;
-    int rood = 0;
-    int groen = 0;
-    Color kleur = Color.FromArgb(rood, groen, blauw);
+    schaal_voorbeeld *= BM_Grootte[0] / BM_voorbeeld_grootte[0];
     int mandel_chunks = iteraties_voorbeeld / 3;
+    Color kleur;
 
-    for (int x = 0; x < kies_bitmap.Width; x++)
+    for (int x = 0; x < plaatje.Width; x++)
     {
-        for (int y = 0; y < kies_bitmap.Height; y++)
+        for (int y = 0; y < plaatje.Height; y++)
         {
-            
-            double x_coordinaat_t = functie_x_test(x, schaal_voorbeeld) + x_voorbeeld;
-            double y_coordinaat_t = functie_y_test(y, schaal_voorbeeld) + y_voorbeeld;
+            double mandel_x = mandelX(x, schaal_voorbeeld, -1, 1.0/75) + x_voorbeeld;
+            double mandel_y = mandelY(y, schaal_voorbeeld, -1, 1.0/75) + y_voorbeeld;
 
-            int mandel = mandelGetal(x_coordinaat_t, y_coordinaat_t, iteraties_voorbeeld);
+            int mandel_n = mandelGetal(mandel_x, mandel_y, iteraties_voorbeeld);
 
-            rood = Convert.ToInt32((255.0 / iteraties_voorbeeld) * mandel * (kleur_voorbeeld + 1));
+            int rood = Convert.ToInt32((255.0 / iteraties_voorbeeld) * mandel_n * (kleur_voorbeeld + 1));
             rood %= 256;
 
-            blauw = Convert.ToInt32((255.0 / (iteraties_voorbeeld - mandel_chunks)) * mandel * (kleur_voorbeeld + 1));
+            int blauw = Convert.ToInt32((255.0 / (iteraties_voorbeeld - mandel_chunks)) * mandel_n * (kleur_voorbeeld + 1));
             blauw %= 256;
 
-            groen = Convert.ToInt32((255.0 / (iteraties_voorbeeld - 2 * mandel_chunks)) * mandel * (kleur_voorbeeld + 1));
+            int groen = Convert.ToInt32((255.0 / (iteraties_voorbeeld - 2 * mandel_chunks)) * mandel_n * (kleur_voorbeeld + 1));
             groen %= 256;
 
             kleur = Color.FromArgb(rood, groen, blauw);
-            kies_bitmap.SetPixel(x, y, kleur);
+            plaatje.SetPixel(x, y, kleur);
         }
     }
-    kies_label.Invalidate();
+    label.Invalidate();
 }
+
+struct Voorbeeld_waardes {
+    public double x_midden;
+    public double y_midden;
+    public double schaal;
+    public int maxmandeliteraties;
+    public int schuif;
+};
+

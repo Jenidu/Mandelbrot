@@ -1,15 +1,14 @@
 ﻿/*library import*/
 using System;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Windows.Forms;
 
-/*grootte en startposities*/
-int[] Venster_Grootte = { 760, 545 }; /*venster grootte*/
+/* Grootte en startposities*/
+int[] Venster_Grootte = {760, 545}; /* Venster grootte */
 int[] StartBM = { 15, 130 };  /* Start positie van bitmap, relatief tot de venster */
 int[] BM_Grootte = { 400, 400 };  /* Bitmap grootte */
 
-/*voorbeeldplaatjes grootte en posities*/
+/*  Voorbeeldplaatjes grootte en posities*/
 int[] BM_voorbeeld_grootte = { 150, 150 };
 int[] BM_verschil = { 165, 210 };
 int[] start_voorbeeld = { 430, 130 };
@@ -24,13 +23,13 @@ int[] TekstBox_Grootte = { 80, 15 };
 int[] Tekstbox_extrainfo_grootte = { 180, 15 };
 int[] TekstBox_PosVerschil = { 0, 25 };
 
-/*scherm venster*/
+/* Scherm venster */
 Form scherm = new Form();
 scherm.Text = "Mandelbrot";
 scherm.BackColor = Color.Beige;
 scherm.ClientSize = new Size(Venster_Grootte[0], Venster_Grootte[1]);
 
-/*labels*/
+/* Labels */
 Label tekst_midden_x = new Label();
 Label tekst_midden_y = new Label();
 Label tekst_schaal = new Label();
@@ -40,13 +39,13 @@ Label tekst_nieuwe_schaal = new Label();
 Label uitleg_kleur = new Label();
 Label uitleg_voorbeeld = new Label();
 
-/*textboxen*/
+/* Textboxen */
 TextBox invoer_midden_x = new TextBox();
 TextBox invoer_midden_y = new TextBox();
 TextBox invoer_schaal = new TextBox();
 TextBox invoer_max_aantal = new TextBox();
 
-/*knoppen*/
+/* Knoppen */
 Button ga_knop = new Button();
 Button kies_1 = new Button();
 Button kies_2 = new Button();
@@ -56,7 +55,7 @@ Button kies_4 = new Button();
 
 TrackBar schuif = new TrackBar();
 
-/*bitmaps*/
+/* Bitmaps */
 Bitmap plaatje = new Bitmap(BM_Grootte[0], BM_Grootte[1]);
 Bitmap voorbeeld_1 = new Bitmap(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
 Bitmap voorbeeld_2 = new Bitmap(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
@@ -64,7 +63,7 @@ Bitmap voorbeeld_3 = new Bitmap(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]
 Bitmap voorbeeld_4 = new Bitmap(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
 
 
-/*labels*/
+/* Labels */
 Label label_plaatje = new Label();
 Label label_voorbeeld_1 = new Label();
 Label label_voorbeeld_2 = new Label();
@@ -72,31 +71,29 @@ Label label_voorbeeld_3 = new Label();
 Label label_voorbeeld_4 = new Label();
 
 
-/*globale toestand variabelen*/
+/* Globale toestand variabelen */
 double x_midden = 0, y_midden = 0, schaalfactor = 1, muis_x = 0, muis_y = 0;
 int Maxmandeliteraties = 100;  /* Maximale keren dat een de mandelbrot itereert */
 
-/*venster opstarten*/
 opstartVenster();
 
-/*Event handlers voor als de text veranderd in boxen*/
+/* Event handlers voor als de text veranderd in boxen */
 invoer_midden_x.TextChanged += boxVeranderd;
 invoer_midden_y.TextChanged += boxVeranderd;
 invoer_schaal.TextChanged += boxVeranderd;
 invoer_max_aantal.TextChanged += boxVeranderd;
 
-/*Even handlers om plaatje opnieuw te tekenen als er op een knop wordt geklikt*/
+/* Even handlers om plaatje opnieuw te tekenen als er op een knop wordt geklikt */
 ga_knop.Click += tekenen;
 kies_1.Click += teken_1;
 kies_2.Click += teken_2;
 kies_3.Click += teken_3;
 kies_4.Click += teken_4;
 
-/*Event handler voor in- en uitzoomen van de muis*/
-label_plaatje.MouseClick += muisKlik;
 
-/*Even handler voor het gebruik van de trackbar*/
-schuif.Scroll += VeranderSchuif;
+label_plaatje.MouseClick += muisKlik;  /* Event handler voor in- en uitzoomen van de muis */
+
+schuif.Scroll += VeranderSchuif;  /* Event handler voor het gebruik van de trackbar */
 
 
 Application.Run(scherm);
@@ -119,14 +116,14 @@ void boxVeranderd(object sender, EventArgs ea)
 
 void opstartVenster()
 {
-    /*Label voor de bitmap*/
+    /* Label voor de bitmap */
     scherm.Controls.Add(label_plaatje);
     label_plaatje.Location = new Point(StartBM[0], StartBM[1]);
     label_plaatje.Size = new Size(BM_Grootte[0], BM_Grootte[1]);
     label_plaatje.BackColor = Color.White;
     label_plaatje.Image = plaatje;
 
-    /* tekst toevoegen bij het input gedeelte */
+    /* Tekst toevoegen bij het input gedeelte */
     scherm.Controls.Add(tekst_midden_x);
     tekst_midden_x.Location = new Point(StartVensterTekst[0], StartVensterTekst[1]);
     tekst_midden_x.Size = new Size(80, 15);
@@ -168,7 +165,7 @@ void opstartVenster()
     invoer_max_aantal.Size = new Size(TekstBox_Grootte[0], TekstBox_Grootte[1]);
     invoer_max_aantal.Text = "100";
 
-    /* Knop aanmaken voor input gedeelte*/
+    /* Knop aanmaken voor input gedeelte */
     scherm.Controls.Add(ga_knop);
     ga_knop.Location = new Point(225, 90);
     ga_knop.Size = new Size(40, 25);
@@ -180,59 +177,59 @@ void opstartVenster()
     uitleg_voorbeeld.Size = new Size(200, 15);
     uitleg_voorbeeld.Text = "Kies hier uit enkele voorbeelden!";
 
-    // voorbeeldbitmap 1
+    /* Voorbeeldbitmap 1 */
     scherm.Controls.Add(label_voorbeeld_1);
     label_voorbeeld_1.Location = new Point(start_voorbeeld[0], start_voorbeeld[1]);
     label_voorbeeld_1.Size = new Size(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
     label_voorbeeld_1.BackColor = Color.White;
     label_voorbeeld_1.Image = voorbeeld_1;
 
-    // voorbeeldbitmap 2
+    /* Voorbeeldbitmap 2 */
     scherm.Controls.Add(label_voorbeeld_2);
     label_voorbeeld_2.Location = new Point(start_voorbeeld[0], start_voorbeeld[1] + BM_verschil[1]);
     label_voorbeeld_2.Size = new Size(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
     label_voorbeeld_2.BackColor = Color.White;
     label_voorbeeld_2.Image = voorbeeld_2;
 
-    // voorbeeldbitmap 3
+    /* Voorbeeldbitmap 3 */
     scherm.Controls.Add(label_voorbeeld_3);
     label_voorbeeld_3.Location = new Point(start_voorbeeld[0] + BM_verschil[0], start_voorbeeld[1]);
     label_voorbeeld_3.Size = new Size(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
     label_voorbeeld_3.BackColor = Color.White;
     label_voorbeeld_3.Image = voorbeeld_3;
 
-    // voorbeeldbitmap 4
+    /* Voorbeeldbitmap 4 */
     scherm.Controls.Add(label_voorbeeld_4);
     label_voorbeeld_4.Location = new Point(start_voorbeeld[0] + BM_verschil[0], start_voorbeeld[1] + BM_verschil[1]);
     label_voorbeeld_4.Size = new Size(BM_voorbeeld_grootte[0], BM_voorbeeld_grootte[1]);
     label_voorbeeld_4.BackColor = Color.White;
     label_voorbeeld_4.Image = voorbeeld_4;
 
-    /* Knop voorbeeld 1*/
+    /* Knop voorbeeld 1 */
     scherm.Controls.Add(kies_1);
     kies_1.Location = new Point(start_voorbeeld[0], start_voorbeeld[1] + knop_afstand[0]);
     kies_1.Size = new Size(knop_grootte[0], knop_grootte[1]);
     kies_1.Text = "Kies 1";
 
-    /* Knop voorbeeld 2*/
+    /* Knop voorbeeld 2 */
     scherm.Controls.Add(kies_2);
     kies_2.Location = new Point(start_voorbeeld[0], start_voorbeeld[1] + BM_verschil[1] + knop_afstand[0]);
     kies_2.Size = new Size(knop_grootte[0], knop_grootte[1]);
     kies_2.Text = "Kies 2";
 
-    /* Knop voorbeeld 3*/
+    /* Knop voorbeeld 3 */
     scherm.Controls.Add(kies_3);
     kies_3.Location = new Point(start_voorbeeld[0] + BM_verschil[0], start_voorbeeld[1] + knop_afstand[0]);
     kies_3.Size = new Size(knop_grootte[0], knop_grootte[1]);
     kies_3.Text = "Kies 3";
 
-    /* Knop voorbeeld 4*/
+    /* Knop voorbeeld 4 */
     scherm.Controls.Add(kies_4);
     kies_4.Location = new Point(start_voorbeeld[0] + BM_verschil[0], start_voorbeeld[1] + +BM_verschil[1] + knop_afstand[0]);
     kies_4.Size = new Size(knop_grootte[0], knop_grootte[1]);
     kies_4.Text = "Kies 4";
 
-    //trackbar aanmaken
+    /* Trackbar aanmaken */
     scherm.Controls.Add(schuif);
     schuif.Size = new Size(315, 280);
     schuif.Location = new Point(start_voorbeeld[0], start_voorbeeld[1] - 90);
@@ -247,13 +244,13 @@ void opstartVenster()
     uitleg_kleur.Text = "Verander hiermee de kleur!";
 
     /* Voorbeelden moeten zichtbaar zijn bij opstarten*/
-    voorbeelden_opstarten();
+    voorbeeldenOpstarten();
 
-    //figuur moet zichtbaar zijn bij opstarten
+    // Figuur moet zichtbaar zijn bij opstarten
     tekenfiguur_kleur();
 }
 
-double[] functieF(double x, double y, double a, double b)/*berekent (a,b) door middel van f*/
+double[] functieF(double x, double y, double a, double b)  /* Berekent (a,b) door middel van f */
 {
     double[] ret = { 0, 0 };
     ret[0] = a * a - b * b + x;
@@ -261,7 +258,7 @@ double[] functieF(double x, double y, double a, double b)/*berekent (a,b) door m
     return ret;  /* Geef nieuwe a,b terug */
 }
 
-int mandelGetal(double x, double y, int iteraties) /*berekent het mandelgetal*/
+int mandelGetal(double x, double y, int iteraties)  /* Berekent het mandelgetal */
 {
     double[] a_b = [0, 0];
     double afstand = 0;
@@ -275,34 +272,35 @@ int mandelGetal(double x, double y, int iteraties) /*berekent het mandelgetal*/
     return n;
 }
 
-double functie_x(int x) /*berekent de nieuwe x_coördinaat*/
+double functie_x(int x) /* Berekent de nieuwe x_coördinaat */
 {
     double x_new = (double)x / 100;
     x_new = (x_new - 2) * schaalfactor;
     return x_new;
 }
 
-double functie_y(int y)/*berekent de nieuwe y coördinaat*/
+double functie_y(int y)  /* Berekent de nieuwe y coördinaat */
 {
     double y_new = (double)y / 100;
+
     y_new = y_new - 2;
     y_new = (y_new * -1) * schaalfactor;
+
     return y_new;
 }
 
-void tekenen(object o, EventArgs e)/*Event handler voor het tekenen van de figuur bij drukken op de knop*/
+void tekenen(object o, EventArgs e)  /* Event handler voor het tekenen van de figuur bij drukken op de knop */
 {
-    x_midden = Double.Parse(invoer_midden_x.Text);
+    x_midden = double.Parse(invoer_midden_x.Text);
     y_midden = double.Parse(invoer_midden_y.Text);
     schaalfactor = double.Parse(invoer_schaal.Text);
     Maxmandeliteraties = int.Parse(invoer_max_aantal.Text);
     tekst_nieuwe_midden.Text = ""; 
     tekst_nieuwe_schaal.Text = "";
-    tekenfiguur_kleur();   
-
+    tekenfiguur_kleur();
 }
 
-void muisKlik(object o, MouseEventArgs ea)/*Event handler voor in- en uitzoomen door het klikken van de muis*/
+void muisKlik(object o, MouseEventArgs ea)  /* Event handler voor in- en uitzoomen door het klikken van de muis */
 {
     
     if (ea.Button == MouseButtons.Left)
@@ -327,8 +325,8 @@ void muisKlik(object o, MouseEventArgs ea)/*Event handler voor in- en uitzoomen 
     double info_midden_x = Math.Round(x_midden, 2);
     double info_midden_y = Math.Round(y_midden, 2);
     double info_schaal = Math.Round(schaalfactor, 6);
-    string tekst_midden = ($"het midden is nu ({info_midden_x},{info_midden_y})!");
-    string tekst_schaal = ($"De schaal is nu {info_schaal}!");
+    string tekst_midden = $"het midden is nu ({info_midden_x}, {info_midden_y})";
+    string tekst_schaal = $"De schaal is nu {info_schaal}";
     scherm.Controls.Add(tekst_nieuwe_midden);
     tekst_nieuwe_midden.Location = new Point(StartVensterTekst_Muisklik[0], StartVensterTekst_Muisklik[1]);
     tekst_nieuwe_midden.Size = new Size(Tekstbox_extrainfo_grootte[0], Tekstbox_extrainfo_grootte[1]);
@@ -339,52 +337,48 @@ void muisKlik(object o, MouseEventArgs ea)/*Event handler voor in- en uitzoomen 
     tekst_nieuwe_schaal.Text = tekst_schaal;
 }
 
-void VeranderSchuif(object o, EventArgs ea)/*Bij het veranderen van de schuif moet de figuur opnieuw getekend worden*/
+void VeranderSchuif(object o, EventArgs ea)  /* Bij het veranderen van de schuif moet de figuur opnieuw getekend worden */
 {
     tekenfiguur_kleur();
 }
 
 void tekenfiguur_kleur()
 {
-    int blauw = 0;
-    int rood = 0;
-    int groen = 0;
-    Color kleur = Color.FromArgb(rood, groen, blauw);
     int mandel_chunks = Maxmandeliteraties / 3;
-
+    Color kleur;
 
     for (int x = 0; x < plaatje.Width; x++)
     {
         for (int y = 0; y < plaatje.Height; y++)
         {
+            /* Bereken coordinaten in de mandelbrot {-2 <-> 2} */
+            double x_mandel = functie_x(x) + x_midden;
+            double y_mandel = functie_y(y) + y_midden;
 
-            double x_coordinaat = functie_x(x) + x_midden;
-            double y_coordinaat = functie_y(y) + y_midden;
-
-            int mandel = mandelGetal(x_coordinaat, y_coordinaat, Maxmandeliteraties);
+            int mandel_n = mandelGetal(x_mandel, y_mandel, Maxmandeliteraties);
                                   
-            rood = Convert.ToInt32((255.0 / Maxmandeliteraties) * mandel * (schuif.Value + 1));
-            rood %= 256;            
+            int rood = Convert.ToInt32((255.0 / Maxmandeliteraties) * mandel_n * (schuif.Value + 1));
+            rood %= 256;  /* RGB moet altijd kleiner zijn dan 256 */
                   
-            blauw = Convert.ToInt32((255.0 / (Maxmandeliteraties - mandel_chunks)) * mandel * (schuif.Value + 1));
-            blauw %= 256;
+            int blauw = Convert.ToInt32((255.0 / (Maxmandeliteraties - mandel_chunks)) * mandel_n * (schuif.Value + 1));
+            blauw %= 256;  /* RGB moet altijd kleiner zijn dan 256 */
                        
-            groen = Convert.ToInt32((255.0 / (Maxmandeliteraties - 2*mandel_chunks)) * mandel * (schuif.Value + 1));
-            groen %= 256;
-            
-            kleur = Color.FromArgb(rood, groen, blauw);
-            plaatje.SetPixel(x, y, kleur);
+            int groen = Convert.ToInt32((255.0 / (Maxmandeliteraties - 2*mandel_chunks)) * mandel_n * (schuif.Value + 1));
+            groen %= 256;  /* RGB moet altijd kleiner zijn dan 256 */
+
+            kleur = Color.FromArgb(rood, groen, blauw);  /* Update kleur */
+            plaatje.SetPixel(x, y, kleur);  /* Zet pixel (x,y) in bitmap */
         }
     }
     label_plaatje.Invalidate();
 }
 
-void voorbeelden_opstarten()/*De voorbeelden met vooraf ingestelden waarden worden opgestart*/
+void voorbeeldenOpstarten()/*De voorbeelden met vooraf ingestelden waarden worden opgestart*/
 {
-    teken_voorbeelden(voorbeeld_1, label_voorbeeld_1, 0, 0, 1, 100, 110);
-    teken_voorbeelden(voorbeeld_2, label_voorbeeld_2, -0.108625, 0.9014428, 3.8147E-6, 400, 255);
-    teken_voorbeelden(voorbeeld_3, label_voorbeeld_3, 0.006875, 0.80638671875, 9.765625E-03, 1000, 130);
-    teken_voorbeelden(voorbeeld_4, label_voorbeeld_4, -0.16745422105204897, 1.041226005880121, 5.82076609134674E-6, 2000, 50);
+    tekenVoorbeelden(voorbeeld_1, label_voorbeeld_1, 0, 0, 1, 100, 110);
+    tekenVoorbeelden(voorbeeld_2, label_voorbeeld_2, -0.108625, 0.9014428, 3.8147E-6, 400, 255);
+    tekenVoorbeelden(voorbeeld_3, label_voorbeeld_3, 0.006875, 0.80638671875, 9.765625E-03, 1000, 130);
+    tekenVoorbeelden(voorbeeld_4, label_voorbeeld_4, -0.16745422105204897, 1.041226005880121, 5.82076609134674E-6, 2000, 50);
 }
 
 void teken_1(object o, EventArgs e)/*Event handler voor het tekenen van voorbeeld 1 wanneer op de klop wordt gedrukt*/
@@ -472,7 +466,7 @@ double functie_y_test(int y, double c)/*Berekent de nieuwe y coördinaat in de v
     return y_new_t;
 }
 
-void teken_voorbeelden(Bitmap kies_bitmap, Label kies_label, double x_voorbeeld, double y_voorbeeld, double schaal_voorbeeld, int iteraties_voorbeeld, double kleur_voorbeeld)/*Tekent de voorbeeldplaatjes*/
+void tekenVoorbeelden(Bitmap kies_bitmap, Label kies_label, double x_voorbeeld, double y_voorbeeld, double schaal_voorbeeld, int iteraties_voorbeeld, double kleur_voorbeeld)  /* Tekent de voorbeeldplaatjes */
 {
     schaal_voorbeeld = schaal_voorbeeld * (400 / 150);
     int blauw = 0;
